@@ -24,11 +24,21 @@ from service.models import Product, Category
 
 class ProductFactory(factory.Factory):
     """Creates fake products for testing"""
-
     class Meta:
         """Maps factory to data model"""
 
         model = Product
-
     id = factory.Sequence(lambda n: n)
-   ## Add code to create Fake Products 
+    name = factory.Faker("name")
+    description = factory.Faker("text")
+    price = FuzzyDecimal(0.5, 1000.0, 2)
+    available = FuzzyChoice(choices=[True, False])
+    category = FuzzyChoice(
+        choices=[
+            Category.CLOTHS,
+            Category.FOOD,
+            Category.HOUSEWARES,
+            Category.AUTOMOTIVE,
+            Category.TOOLS,
+        ]
+    )

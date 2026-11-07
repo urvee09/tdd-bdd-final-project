@@ -20,6 +20,7 @@ $(function () {
 
     /// Clears all form fields
     function clear_form_data() {
+        $("#product_id").val("");
         $("#product_name").val("");
         $("#product_description").val("");
         $("#product_available").val("");

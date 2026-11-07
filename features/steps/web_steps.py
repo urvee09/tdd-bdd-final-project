@@ -50,6 +50,11 @@ def step_impl(context, text_string):
     element = context.driver.find_element(By.TAG_NAME, 'body')
     assert(text_string not in element.text)
 
+@then('I should see "{text_string}"')
+def step_impl(context, text_string):
+    element = context.driver.find_element(By.TAG_NAME, 'body')
+    assert(text_string in element.text)
+
 @when('I set the "{element_name}" to "{text_string}"')
 def step_impl(context, element_name, text_string):
     element_id = ID_PREFIX + element_name.lower().replace(' ', '_')
@@ -105,6 +110,21 @@ def step_impl(context, element_name):
 ##################################################################
 
 ## UPDATE CODE HERE ##
+@when('I press the "{button}" button')
+def step_impl(context, button):
+    button_id = button.lower() + '-btn'
+    element = context.driver.find_element(By.ID, button_id)
+    element.click()
+
+@then('I should see the message "{message}"')
+def step_impl(context, message):
+    found = WebDriverWait(context.driver, context.wait_seconds).until(
+        expected_conditions.text_to_be_present_in_element(
+            (By.ID, "flash_message"),
+            message
+        )
+    )
+    assert(found)
 
 ##################################################################
 # This code works because of the following naming convention:
